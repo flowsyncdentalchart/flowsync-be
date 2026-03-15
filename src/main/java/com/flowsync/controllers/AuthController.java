@@ -55,7 +55,7 @@ public class AuthController {
                     .maxAge(10 * 60 * 60).sameSite("Lax").build();
 
             User user = userRepository.findByUsername(userDetails.getUsername())
-                    .orElseThrow(() -> new UsernameNotFoundException("Patient not found"));
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
             AuthResponse authResponse = new AuthResponse(jwt, user.getUsername(), user.getTitle(), user.getFirstName(),
                     user.getLastName(), user.getCreatedAt(), user.getUpdatedAt(), "Login successful!");
