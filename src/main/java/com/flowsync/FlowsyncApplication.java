@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FlowsyncApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FlowsyncApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FlowsyncApplication.class, args);
+    }
 
 }
