@@ -2,6 +2,7 @@ package com.flowsync.controllers;
 
 import com.flowsync.dto.AuthRequest;
 import com.flowsync.dto.AuthResponse;
+import com.flowsync.exceptions.UnauthorizedException;
 import com.flowsync.models.User;
 import com.flowsync.repositories.UserRepository;
 import com.flowsync.services.AuthService;
@@ -74,7 +75,7 @@ public class AuthController {
 
         if (authentication == null || !authentication.isAuthenticated()
                 || authentication instanceof AnonymousAuthenticationToken) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not authenticated!");
+            throw new UnauthorizedException("Not authenticated!");
         }
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
