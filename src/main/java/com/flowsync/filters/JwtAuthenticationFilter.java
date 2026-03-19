@@ -33,13 +33,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
-    /**
-     * Kör inte JWT-filter på /auth/** endpoints (login/register/logout/check).
-     */
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
-        return path != null && (path.equals("/login") || path.equals("/auth/logout"));
+        return path != null && (path.equals("/login"));
     }
 
     @Override
