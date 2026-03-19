@@ -39,14 +39,19 @@ public class PatientService {
     }
 
     public PatientResponseDTO updatePatient(Long id, PatientDTO patientDTO) {
+
         Patient updatedPatient = patientRepository.findPatientById(id);
 
         if (updatedPatient != null) {
-            if (patientDTO.getFirstName() != null) {
-                updatedPatient.setFirstName(patientDTO.getFirstName());
-            }
-            if (patientDTO.getLastName() != null) {
-                updatedPatient.setLastName(patientDTO.getLastName());
+            if (patientDTO.getFirstName() == null && patientDTO.getLastName() == null) {
+                throw new IllegalArgumentException("Either first name or last name must be provided");
+            } else {
+                if (patientDTO.getFirstName() != null) {
+                    updatedPatient.setFirstName(patientDTO.getFirstName());
+                }
+                if (patientDTO.getLastName() != null) {
+                    updatedPatient.setLastName(patientDTO.getLastName());
+                }
             }
         } else {
             throw new ResourceNotFoundException("Patient not found");
