@@ -36,10 +36,22 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource())).csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/login").permitAll().anyRequest().authenticated())
+    public SecurityFilterChain filterChain(HttpSecurity http, CorsConfigurationSource corsConfigurationSource)
+            throws Exception {
+
+        // configuram CORS
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource))
+                // CSRF, dezactivat in dev
+                .csrf(csrf -> csrf.disable()).logout(logout -> logout.disable())
+                // definim regulile URL
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/login").permitAll().requestMatchers("/logout/**")
+                        .permitAll().requestMatchers("/check/**").permitAll()
+
+                        // orice alte request-uri, user-ul trebuie sa fie logat
+                        .anyRequest().authenticated())
+                // dezactivam sesiunea din cauza ca jwt nu are state
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // adaugam filtru jwt inainte de filtrul standart
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
@@ -47,7 +59,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5432"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Cookie"));
 
