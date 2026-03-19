@@ -1,6 +1,7 @@
 package com.flowsync.services;
 
 
+import com.flowsync.exceptions.ResourceNotFoundException;
 import com.flowsync.models.Patient;
 import com.flowsync.repositories.PatientRepository;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,12 @@ public class PatientService {
     }
 
     public Patient findPatientById(Long id) {
+        Patient tempPatient = patientRepository.findPatientById(id);
+
+        if (tempPatient == null) {
+            throw new ResourceNotFoundException("Patient not found");
+        }
+
 
         return patientRepository.findPatientById(id);
 
@@ -37,13 +44,20 @@ public class PatientService {
                 updatedPatient.setLastName(patient.getLastName());
             }
         } else {
-            throw new RuntimeException("Patient not found");
+            throw new ResourceNotFoundException("Patient not found");
         }
 
         return patientRepository.save(updatedPatient);
     }
 
     public ResponseEntity deletePatient(Long id) {
+
+        Patient tempPatient = patientRepository.findPatientById(id);
+
+        if (tempPatient == null) {
+            throw new ResourceNotFoundException("Patient not found");
+        }
+
         patientRepository.deleteById(id);
         return ResponseEntity.ok("Deleted successfully");
     }
