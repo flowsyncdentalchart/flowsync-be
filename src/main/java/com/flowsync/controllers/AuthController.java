@@ -71,16 +71,18 @@ public class AuthController {
     @GetMapping("/check")
     public ResponseEntity<?> checkAuthentication() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String jwt = jwtUtil.generateToken(userDetails);
 
         if (authentication == null || !authentication.isAuthenticated()
                 || authentication instanceof AnonymousAuthenticationToken) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not authenticated!");
         }
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = authService.findByUsername(userDetails.getUsername());
 
-        return ResponseEntity.ok(new AuthResponse("Authenticated", user.getUsername(), user.getTitle(), user.getFirstName(),
+        return ResponseEntity.ok(new AuthResponse(jwt, user.getUsername(), user.getTitle(), user.getFirstName(),
                 user.getLastName(), user.getCreatedAt(), user.getUpdatedAt(), "Authenticated!"));
     }
 
