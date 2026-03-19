@@ -1,6 +1,5 @@
 package com.flowsync.services;
 
-
 import com.flowsync.dto.PatientDTO;
 import com.flowsync.dto.PatientResponseDTO;
 import com.flowsync.exceptions.ResourceNotFoundException;
@@ -32,7 +31,6 @@ public class PatientService {
         if (tempPatient == null) {
             throw new ResourceNotFoundException("Patient not found");
         }
-
 
         return patientMapper.createPatientResponseDTOFromPatient(tempPatient);
 

@@ -17,9 +17,9 @@ public class Patient {
     @Id
     @GeneratedValue
     private Long id;
-    @Column (nullable = false)
+    @Column(nullable = false)
     private String firstName;
-    @Column (nullable = false)
+    @Column(nullable = false)
     private String lastName;
     @CreationTimestamp
     private Date createdAt;

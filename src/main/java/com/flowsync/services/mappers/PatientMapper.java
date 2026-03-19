@@ -28,9 +28,6 @@ public class PatientMapper {
 
         return new PatientResponseDTO(patient.getId(), patient.getFirstName(), patient.getLastName());
 
-
-
-
     }
 
 }
