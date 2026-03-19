@@ -1,9 +1,12 @@
 package com.flowsync.services;
 
 
+import com.flowsync.dto.PatientDTO;
+import com.flowsync.dto.PatientResponseDTO;
 import com.flowsync.exceptions.ResourceNotFoundException;
 import com.flowsync.models.Patient;
 import com.flowsync.repositories.PatientRepository;
+import com.flowsync.services.mappers.PatientMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -11,17 +14,19 @@ import org.springframework.stereotype.Service;
 public class PatientService {
 
     private final PatientRepository patientRepository;
+    private final PatientMapper patientMapper;
 
-    public PatientService(PatientRepository patientRepository) {
+    public PatientService(PatientRepository patientRepository, PatientMapper patientMapper) {
         this.patientRepository = patientRepository;
+        this.patientMapper = patientMapper;
     }
 
-    public Patient createPatient(Patient patient) {
+    public Patient createPatient(PatientDTO patientDTO) {
 
-        return patientRepository.save(patient);
+        return patientRepository.save(patientMapper.createPatientFromPatientDTO(patientDTO));
     }
 
-    public Patient findPatientById(Long id) {
+    public PatientResponseDTO findPatientById(Long id) {
         Patient tempPatient = patientRepository.findPatientById(id);
 
         if (tempPatient == null) {
@@ -29,25 +34,27 @@ public class PatientService {
         }
 
 
-        return patientRepository.findPatientById(id);
+        return patientMapper.createPatientResponseDTOFromPatient(tempPatient);
 
     }
 
-    public Patient updatePatient(Long id, Patient patient) {
+    public PatientResponseDTO updatePatient(Long id, PatientDTO patientDTO) {
         Patient updatedPatient = patientRepository.findPatientById(id);
 
         if (updatedPatient != null) {
-            if (patient.getFirstName() != null) {
-                updatedPatient.setFirstName(patient.getFirstName());
+            if (patientDTO.getFirstName() != null) {
+                updatedPatient.setFirstName(patientDTO.getFirstName());
             }
-            if (patient.getLastName() != null) {
-                updatedPatient.setLastName(patient.getLastName());
+            if (patientDTO.getLastName() != null) {
+                updatedPatient.setLastName(patientDTO.getLastName());
             }
         } else {
             throw new ResourceNotFoundException("Patient not found");
         }
 
-        return patientRepository.save(updatedPatient);
+        patientRepository.save(updatedPatient);
+
+        return patientMapper.createPatientResponseDTOFromPatient(updatedPatient);
     }
 
     public ResponseEntity deletePatient(Long id) {
