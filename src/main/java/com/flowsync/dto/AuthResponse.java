@@ -6,7 +6,6 @@ public class AuthResponse {
     private String tokenType;
     private String message;
 
-
     public AuthResponse(String access_token, String expires_in, String tokenType, String message) {
         this.access_token = access_token;
         this.expires_in = expires_in;
