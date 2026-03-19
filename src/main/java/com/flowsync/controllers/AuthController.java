@@ -11,11 +11,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -69,15 +69,23 @@ public class AuthController {
         }
     }
     @GetMapping("/check")
-    public ResponseEntity<?> checkAuthentication(@AuthenticationPrincipal UserDetails userDetails) {
-        User user = userRepository.findByUsername(userDetails.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    public ResponseEntity<?> checkAuthentication() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        return ResponseEntity.ok(new AuthResponse(null, user.getUsername(), user.getTitle(), user.getFirstName(),
-                user.getLastName(), user.getCreatedAt(), user.getUpdatedAt(), "Authenticated"));
+        if (authentication == null || !authentication.isAuthenticated()
+                || authentication instanceof AnonymousAuthenticationToken) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not authenticated!");
+        }
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User user = authService.findByUsername(userDetails.getUsername());
+
+        return ResponseEntity.ok(new AuthResponse("Authenticated", user.getUsername(), user.getTitle(), user.getFirstName(),
+                user.getLastName(), user.getCreatedAt(), user.getUpdatedAt(), "Authenticated!"));
     }
 
-    @PostMapping("/logout")
+
+        @PostMapping("/logout")
     public ResponseEntity<?> logout() {
         ResponseCookie jwtCookie = ResponseCookie.from("jwt", "").httpOnly(true).secure(false)
                 .path("/").maxAge(0).sameSite("Strict").build();
