@@ -1,13 +1,18 @@
 package com.flowsync.models;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
+@Entity
+@Table(name = "dental_charts")
 public class DentalChart {
 
     @Id
@@ -15,10 +20,12 @@ public class DentalChart {
     private Long id;
 
     @ManyToOne
-    private Long patientId;
+    @JoinColumn(name = "patient_id", nullable = false)
+    private Patient patient;
 
     @ManyToOne
-    private Long caregiverId;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @CreationTimestamp
     private Date createdAt;
@@ -30,24 +37,31 @@ public class DentalChart {
 
     }
 
+    public DentalChart(Patient patient, User user) {
+        this.patient = patient;
+        this.user = user;
+    }
+
+
+
     public Long getId() {
         return id;
     }
 
-    public Long getPatientId() {
-        return patientId;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public void setPatientId(Long patientId) {
-        this.patientId = patientId;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
-    public Long getCaregiverId() {
-        return caregiverId;
+    public User getUser() {
+        return user;
     }
 
-    public void setCaregiverId(Long caregiverId) {
-        this.caregiverId = caregiverId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Date getCreatedAt() {
