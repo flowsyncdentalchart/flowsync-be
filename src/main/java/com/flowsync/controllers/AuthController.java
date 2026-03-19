@@ -68,10 +68,10 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect username or password");
         }
     }
+
     @GetMapping("/check")
     public ResponseEntity<?> checkAuthentication() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
 
         if (authentication == null || !authentication.isAuthenticated()
                 || authentication instanceof AnonymousAuthenticationToken) {
@@ -86,11 +86,10 @@ public class AuthController {
                 user.getLastName(), user.getCreatedAt(), user.getUpdatedAt(), "Authenticated!"));
     }
 
-
-        @PostMapping("/logout")
+    @PostMapping("/logout")
     public ResponseEntity<?> logout() {
-        ResponseCookie jwtCookie = ResponseCookie.from("jwt", "").httpOnly(true).secure(false)
-                .path("/").maxAge(0).sameSite("Strict").build();
+        ResponseCookie jwtCookie = ResponseCookie.from("jwt", "").httpOnly(true).secure(false).path("/").maxAge(0)
+                .sameSite("Strict").build();
 
         SecurityContextHolder.clearContext();
 
