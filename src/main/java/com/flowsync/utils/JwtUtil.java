@@ -22,7 +22,6 @@ public class JwtUtil {
     @Value("${jwt.token-type}")
     private String tokenType;
 
-
     @Value("${jwt.expirationMs}")
     private int jwtExpirationMs;
 

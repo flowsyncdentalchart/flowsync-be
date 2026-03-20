@@ -2,7 +2,7 @@ package com.flowsync.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"accessToken", "expiresIn",  "tokenType", "message" })
+@JsonPropertyOrder({ "accessToken", "expiresIn", "tokenType", "message" })
 public class AuthResponse {
     private String accessToken;
     private String expiresIn;
