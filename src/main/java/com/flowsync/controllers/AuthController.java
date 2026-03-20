@@ -34,7 +34,7 @@ public class AuthController {
     private final UserRepository userRepository;
 
     public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, AuthService authService,
-            UserRepository userRepository) {
+                          UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.authService = authService;
@@ -57,10 +57,15 @@ public class AuthController {
             ResponseCookie jwtCookie = ResponseCookie.from("jwt", jwt).httpOnly(true).secure(false).path("/")
                     .maxAge(10 * 60 * 60).sameSite("Lax").build();
 
-            User user = userRepository.findByUsername(userDetails.getUsername())
+            userRepository.findByUsername(userDetails.getUsername())
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-            AuthResponse authResponse = new AuthResponse(jwt, "36000", "Bearer", "Login successful!");
+            AuthResponse authResponse = new AuthResponse(
+                    jwt,
+                    String.valueOf(jwtUtil.getJwtExpirationMs() / 1000),
+                    jwtUtil.getTokenType(),
+                    "Login successful!"
+            );
 
             return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body(authResponse);
 
