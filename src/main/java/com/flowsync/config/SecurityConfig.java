@@ -44,8 +44,12 @@ public class SecurityConfig {
                 // CSRF, dezactivat in dev
                 .csrf(csrf -> csrf.disable()).logout(logout -> logout.disable())
                 // definim regulile URL
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/login").permitAll().requestMatchers("/logout/**")
-                        .permitAll().requestMatchers("/check/**").permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/logout/**").permitAll()
+                        .requestMatchers("/check/**").permitAll()
+                        .requestMatchers("/api/user/**").permitAll()
+
 
                         // orice alte request-uri, user-ul trebuie sa fie logat
                         .anyRequest().authenticated())
