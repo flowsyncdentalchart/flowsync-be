@@ -2,24 +2,13 @@ package com.flowsync.dto;
 
 public class DentalChartDTO {
 
-    private Long id;
-
     private Long patientId;
 
     private Long userId;
 
-    public DentalChartDTO(Long id, Long patientId, Long userId) {
-        this.id = id;
+    public DentalChartDTO(Long patientId, Long userId) {
         this.patientId = patientId;
         this.userId = userId;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getPatientId() {
