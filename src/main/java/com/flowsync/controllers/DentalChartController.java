@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,17 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class DentalChartController {
 
     private final DentalChartService dentalChartService;
-    private final DentalChartRepository dentalChartRepository;
-    private final PatientRepository patientRepository;
-    private final UserRepository userRepository;
     private final DentalChartMapper dentalChartMapper;
     private final AuthenticationService authenticationService;
 
     public DentalChartController(DentalChartService dentalChartService, DentalChartRepository dentalChartRepository, PatientRepository patientRepository, UserRepository userRepository, DentalChartMapper dentalChartMapper, AuthenticationService authenticationService) {
         this.dentalChartService = dentalChartService;
-        this.dentalChartRepository = dentalChartRepository;
-        this.patientRepository = patientRepository;
-        this.userRepository = userRepository;
         this.dentalChartMapper = dentalChartMapper;
         this.authenticationService = authenticationService;
     }
@@ -53,6 +49,13 @@ public class DentalChartController {
     public DentalChartResponse getDentalChartById(@PathVariable Long id){
 
         return dentalChartService.getDentalChartById(id);
+
+    }
+
+    @PutMapping("/{id}")
+    public DentalChartResponse updateDentalChart (@PathVariable Long id, @RequestBody DentalChartDTO dentalChartDTO){
+
+        return dentalChartService.updateDentalChart(id, dentalChartDTO);
 
     }
 
