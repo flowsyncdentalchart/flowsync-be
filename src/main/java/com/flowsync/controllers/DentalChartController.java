@@ -10,6 +10,7 @@ import com.flowsync.services.AuthenticationService;
 import com.flowsync.services.DentalChartService;
 import com.flowsync.services.mappers.DentalChartMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,6 +57,13 @@ public class DentalChartController {
     public DentalChartResponse updateDentalChart (@PathVariable Long id, @RequestBody DentalChartDTO dentalChartDTO){
 
         return dentalChartService.updateDentalChart(id, dentalChartDTO);
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteDentalChart (@PathVariable Long id){
+
+        return dentalChartService.deleteDentalChart(id);
 
     }
 

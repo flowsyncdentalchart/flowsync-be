@@ -77,4 +77,13 @@ public class DentalChartService {
 
     }
 
+    public ResponseEntity deleteDentalChart (Long id) {
+        DentalChart dentalChart = dentalChartRepository.findById(id)
+                .orElseThrow( () -> new ResourceNotFoundException("Dental Chart with id " + id + " not found"));
+
+        dentalChartRepository.delete(dentalChart);
+
+        return ResponseEntity.ok("Dental Chart deleted with id " + id);
+    }
+
 }
