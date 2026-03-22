@@ -15,4 +15,13 @@ public class UserMapper {
         userResponse.setUsername(user.getUsername());
         return userResponse;
     }
+
+    public User convertUserResponseToUserEntity(UserResponse userResponse) {
+        User user = new User();
+        user.setId(userResponse.getId());
+        user.setUsername(userResponse.getUsername());
+        user.setFirstName(userResponse.getFirstName());
+        user.setLastName(user.getLastName());
+        return user;
+    }
 }
