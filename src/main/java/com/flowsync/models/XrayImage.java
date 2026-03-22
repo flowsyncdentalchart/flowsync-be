@@ -8,7 +8,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
@@ -20,12 +24,23 @@ public class XrayImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String dentalChart;
+    @ManyToOne
+    @JoinColumn(name = "dental_chart_id")
+    @NotNull(message = "Xray image dental chart reference must not be null")
+    private DentalChart dentalChart;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
+    @NotNull(message = "Xray image user reference must not be null")
     private User takenBy;
 
+    @Column(nullable = false, unique = true)
+    @Size(max = 500, message = "File path too long")
+    @NotNull(message = "Xray image file path must not be null")
+    @Pattern(
+            regexp = "^(https?:\\/\\/.*|\\/.*)$",
+            message = "File path must be a valid URL or absolute path"
+    )
     private String filePath;
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -34,7 +49,7 @@ public class XrayImage {
     public XrayImage() {
     }
 
-    public XrayImage(Long id, String dentalChart, User takenBy, String filePath, LocalDateTime createdAt) {
+    public XrayImage(Long id, DentalChart dentalChart, User takenBy, String filePath, LocalDateTime createdAt) {
         this.id = id;
         this.dentalChart = dentalChart;
         this.takenBy = takenBy;
@@ -50,11 +65,11 @@ public class XrayImage {
         this.id = id;
     }
 
-    public String getDentalChart() {
+    public DentalChart getDentalChart() {
         return dentalChart;
     }
 
-    public void setDentalChart(String dentalChart) {
+    public void setDentalChart(DentalChart dentalChart) {
         this.dentalChart = dentalChart;
     }
 
@@ -80,6 +95,12 @@ public class XrayImage {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        LocalDateTime now = LocalDateTime.now();
+        createdAt = now;
     }
 
 }
