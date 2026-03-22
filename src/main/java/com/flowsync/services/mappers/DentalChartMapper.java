@@ -20,7 +20,6 @@ public class DentalChartMapper {
         this.userRepository = userRepository;
     }
 
-
     public DentalChartDTO createDentalChartDTO(Long patientId, Long userId) {
         return new DentalChartDTO(patientId, userId);
     }
@@ -38,7 +37,6 @@ public class DentalChartMapper {
 
         User user = userRepository.findById(dentalChartDTO.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-
 
         return new DentalChart(patient, user);
     }

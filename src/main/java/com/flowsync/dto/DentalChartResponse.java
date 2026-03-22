@@ -22,7 +22,8 @@ public class DentalChartResponse {
 
     private Date updatedAt;
 
-    public DentalChartResponse(Long id, Long patientId, String patientFirstName, String patientLastName, Long userId, String userFirstName, String userLastName, Date createdAt, Date updatedAt) {
+    public DentalChartResponse(Long id, Long patientId, String patientFirstName, String patientLastName, Long userId,
+            String userFirstName, String userLastName, Date createdAt, Date updatedAt) {
         this.id = id;
         this.patientId = patientId;
         this.patientFirstName = patientFirstName;

@@ -27,14 +27,16 @@ public class DentalChartController {
     private final DentalChartMapper dentalChartMapper;
     private final AuthenticationService authenticationService;
 
-    public DentalChartController(DentalChartService dentalChartService, DentalChartRepository dentalChartRepository, PatientRepository patientRepository, UserRepository userRepository, DentalChartMapper dentalChartMapper, AuthenticationService authenticationService) {
+    public DentalChartController(DentalChartService dentalChartService, DentalChartRepository dentalChartRepository,
+            PatientRepository patientRepository, UserRepository userRepository, DentalChartMapper dentalChartMapper,
+            AuthenticationService authenticationService) {
         this.dentalChartService = dentalChartService;
         this.dentalChartMapper = dentalChartMapper;
         this.authenticationService = authenticationService;
     }
 
     @PostMapping("/{patientId}")
-    public ResponseEntity createDentalChart(@PathVariable Long patientId){
+    public ResponseEntity createDentalChart(@PathVariable Long patientId) {
 
         User user = authenticationService.getLoggedInUser();
 
@@ -42,26 +44,25 @@ public class DentalChartController {
 
         DentalChartDTO dentalChartDTO = dentalChartMapper.createDentalChartDTO(patientId, userId);
 
-
         return dentalChartService.createDentalChart(dentalChartDTO);
     }
 
     @GetMapping("/{id}")
-    public DentalChartResponse getDentalChartById(@PathVariable Long id){
+    public DentalChartResponse getDentalChartById(@PathVariable Long id) {
 
         return dentalChartService.getDentalChartById(id);
 
     }
 
     @PutMapping("/{id}")
-    public DentalChartResponse updateDentalChart (@PathVariable Long id, @RequestBody DentalChartDTO dentalChartDTO){
+    public DentalChartResponse updateDentalChart(@PathVariable Long id, @RequestBody DentalChartDTO dentalChartDTO) {
 
         return dentalChartService.updateDentalChart(id, dentalChartDTO);
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteDentalChart (@PathVariable Long id){
+    public ResponseEntity deleteDentalChart(@PathVariable Long id) {
 
         return dentalChartService.deleteDentalChart(id);
 

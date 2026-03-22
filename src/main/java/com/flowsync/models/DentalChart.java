@@ -42,8 +42,6 @@ public class DentalChart {
         this.user = user;
     }
 
-
-
     public Long getId() {
         return id;
     }
