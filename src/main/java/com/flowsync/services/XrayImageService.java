@@ -29,12 +29,19 @@ public class XrayImageService {
         this.xrayImageMapper = xrayImageMapper;
     }
 
-    public XrayImageResponse uploadXray(Long dentalChartId, XrayImageRequest xrayImageRequest) {
-        DentalChart dentalChart = dentalChartRepository.findById(dentalChartId)
+    public XrayImageResponse uploadXray(XrayImageRequest xrayImageRequest) {
+        DentalChart dentalChart = dentalChartRepository.findById(xrayImageRequest.getDentalChartId())
                 .orElseThrow(() -> new ResourceNotFoundException("DentalChart not found"));
         XrayImage xrayImage = xrayImageFactory.createXrayImageEntity(dentalChart, xrayImageRequest.getFilePath());
         XrayImage savedXrayImage = xrayImageRepository.save(xrayImage);
         xrayImageMapper.toResponse(savedXrayImage);
         return xrayImageMapper.toResponse(savedXrayImage);
+    }
+
+    public XrayImageResponse getXrayImageById(Long xrayImageId) {
+        XrayImage xrayImage = xrayImageRepository.findById(xrayImageId)
+                .orElseThrow(() -> new ResourceNotFoundException("Xray image not found"));
+        XrayImageResponse xrayImageResponse = xrayImageMapper.toResponse(xrayImage);
+        return xrayImageResponse;
     }
 }

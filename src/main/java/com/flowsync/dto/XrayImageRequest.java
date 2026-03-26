@@ -18,7 +18,7 @@ public class XrayImageRequest {
         this.filePath = filePath;
     }
 
-    public Long getDentalChart() {
+    public Long getDentalChartId() {
         return dentalChartId;
     }
 

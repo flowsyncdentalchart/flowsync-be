@@ -7,6 +7,9 @@ import com.flowsync.models.User;
 import com.flowsync.models.XrayImage;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class XrayImageMapper {
 
@@ -26,5 +29,13 @@ public class XrayImageMapper {
         response.setFilePath(xrayImage.getFilePath());
         response.setCreatedAt(xrayImage.getCreatedAt());
         return response;
+    }
+
+    public List<XrayImageResponse> toResponse (List<XrayImage> xrayImages) {
+        List<XrayImageResponse> xrayImageResponses = new ArrayList<>();
+        for(XrayImage xrayImage : xrayImages) {
+            xrayImageResponses.add(toResponse(xrayImage));
+        }
+        return xrayImageResponses;
     }
 }
