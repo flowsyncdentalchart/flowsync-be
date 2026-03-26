@@ -19,6 +19,9 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
+    @Value("${jwt.token-type}")
+    private String tokenType;
+
     @Value("${jwt.expirationMs}")
     private int jwtExpirationMs;
 
@@ -55,6 +58,14 @@ public class JwtUtil {
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token) // Jws not Jwt
                 .getBody();
+    }
+
+    public String getTokenType() {
+        return tokenType;
+    }
+
+    public int getJwtExpirationMs() {
+        return jwtExpirationMs;
     }
 
 }

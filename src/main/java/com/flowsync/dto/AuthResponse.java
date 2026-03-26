@@ -1,85 +1,44 @@
 package com.flowsync.dto;
 
-import com.flowsync.models.enums.Title;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import java.time.LocalDateTime;
-
+@JsonPropertyOrder({ "accessToken", "expiresIn", "tokenType", "message" })
 public class AuthResponse {
-    private String jwtToken;
-    private String username;
-    private Title title;
-    private String firstName;
-    private String lastName;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String accessToken;
+    private String expiresIn;
+    private String tokenType;
     private String message;
 
-    public AuthResponse(String jwtToken, String username, Title title, String firstName, String lastName,
-            LocalDateTime createdAt, LocalDateTime updatedAt, String message) {
-        this.jwtToken = jwtToken;
-        this.username = username;
-        this.title = title;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    public AuthResponse(String access_token, String expires_in, String tokenType, String message) {
+        this.accessToken = access_token;
+        this.expiresIn = expires_in;
+        this.tokenType = tokenType;
         this.message = message;
+
     }
 
-    public String getJwtToken() {
-        return jwtToken;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setJwtToken(String jwtToken) {
-        this.jwtToken = jwtToken;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
-    public String getUsername() {
-        return username;
+    public String getExpiresIn() {
+        return expiresIn;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setExpiresIn(String expiresIn) {
+        this.expiresIn = expiresIn;
     }
 
-    public Title getTitle() {
-        return title;
+    public String getTokenType() {
+        return tokenType;
     }
 
-    public void setTitle(Title title) {
-        this.title = title;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
     }
 
     public String getMessage() {
