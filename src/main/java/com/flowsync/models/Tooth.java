@@ -57,6 +57,10 @@ public class Tooth {
         return state;
     }
 
+    public void setState(ToothState state) {
+        this.state = state;
+    }
+
     public DentalChart getDentalChart() {
         return dentalChart;
     }
