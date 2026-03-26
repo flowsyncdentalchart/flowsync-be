@@ -24,7 +24,8 @@ public class ToothService {
 
     public ToothResponse createTooth(ToothRequest toothRequest) {
         DentalChart dentalChart = dentalChartRepository.findById(toothRequest.getDentalChartId())
-                .orElseThrow(() -> new ResourceNotFoundException("Dental chart with id " + toothRequest.getDentalChartId() + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Dental chart with id " + toothRequest.getDentalChartId() + " not found"));
 
         Tooth tooth = new Tooth(toothRequest.getName(), toothRequest.getState(), dentalChart);
         toothRepository.save(tooth);
@@ -47,7 +48,8 @@ public class ToothService {
         List<ToothResponse> teethResponse = new ArrayList<>();
 
         for (Tooth tooth : teeth) {
-             teethResponse.add(new ToothResponse(tooth.getId(), tooth.getName(), tooth.getState(), tooth.getDentalChart().getId()));
+            teethResponse.add(new ToothResponse(tooth.getId(), tooth.getName(), tooth.getState(),
+                    tooth.getDentalChart().getId()));
         }
 
         return teethResponse;
@@ -62,7 +64,8 @@ public class ToothService {
             updatedTooth.setState(toothRequest.getState());
         }
 
-        return new ToothResponse(updatedTooth.getId(), updatedTooth.getName(), updatedTooth.getState(), updatedTooth.getDentalChart().getId());
+        return new ToothResponse(updatedTooth.getId(), updatedTooth.getName(), updatedTooth.getState(),
+                updatedTooth.getDentalChart().getId());
     }
 
 }

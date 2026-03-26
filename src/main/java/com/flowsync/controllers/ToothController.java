@@ -25,7 +25,7 @@ public class ToothController {
     }
 
     @PostMapping
-    public ResponseEntity createTooth(@RequestBody ToothRequest toothRequest){
+    public ResponseEntity createTooth(@RequestBody ToothRequest toothRequest) {
 
         ToothResponse toothResponse = toothService.createTooth(toothRequest);
 
@@ -33,17 +33,17 @@ public class ToothController {
     }
 
     @GetMapping("/{id}")
-    public ToothResponse getToothById(@PathVariable Long id){
+    public ToothResponse getToothById(@PathVariable Long id) {
         return toothService.getToothById(id);
     }
 
     @GetMapping("/dentalChart/{id}")
-    public List<ToothResponse> getToothByDentalChartId(@PathVariable Long id){
+    public List<ToothResponse> getToothByDentalChartId(@PathVariable Long id) {
         return toothService.getToothByDentalChartId(id);
     }
 
     @PutMapping("/{id}")
-    public ToothResponse updateTooth(@PathVariable Long id, @RequestBody ToothRequest toothRequest){
+    public ToothResponse updateTooth(@PathVariable Long id, @RequestBody ToothRequest toothRequest) {
         return toothService.updateTooth(id, toothRequest);
     }
 }
