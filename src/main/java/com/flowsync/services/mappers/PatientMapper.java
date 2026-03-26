@@ -1,16 +1,16 @@
 package com.flowsync.services.mappers;
 
-import com.flowsync.dto.PatientDTO;
-import com.flowsync.dto.PatientResponseDTO;
+import com.flowsync.dto.PatientRequest;
+import com.flowsync.dto.PatientResponse;
 import com.flowsync.models.Patient;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PatientMapper {
 
-    public PatientDTO createPatientDTOFromPatient(Patient patient) {
+    public PatientRequest createPatientDTOFromPatient(Patient patient) {
 
-        return new PatientDTO(patient.getFirstName(), patient.getLastName());
+        return new PatientRequest(patient.getFirstName(), patient.getLastName());
 
     }
 
@@ -20,13 +20,13 @@ public class PatientMapper {
         }
     }
 
-    public Patient createPatientFromPatientDTO(PatientDTO patientDTO) {
-        return new Patient(patientDTO.getFirstName(), patientDTO.getLastName());
+    public Patient createPatientFromPatientDTO(PatientRequest patientRequest) {
+        return new Patient(patientRequest.getFirstName(), patientRequest.getLastName());
     }
 
-    public PatientResponseDTO createPatientResponseDTOFromPatient(Patient patient) {
+    public PatientResponse createPatientResponseDTOFromPatient(Patient patient) {
 
-        return new PatientResponseDTO(patient.getId(), patient.getFirstName(), patient.getLastName());
+        return new PatientResponse(patient.getId(), patient.getFirstName(), patient.getLastName());
 
     }
 

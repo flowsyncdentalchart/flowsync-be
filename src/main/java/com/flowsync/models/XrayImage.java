@@ -32,7 +32,7 @@ public class XrayImage {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @NotNull(message = "Xray image user reference must not be null")
-    private User takenBy;
+    private User user;
 
     @Column(nullable = false, unique = true)
     @Size(max = 500, message = "File path too long")
@@ -49,10 +49,10 @@ public class XrayImage {
     public XrayImage() {
     }
 
-    public XrayImage(Long id, DentalChart dentalChart, User takenBy, String filePath, LocalDateTime createdAt) {
+    public XrayImage(Long id, DentalChart dentalChart, User user, String filePath, LocalDateTime createdAt) {
         this.id = id;
         this.dentalChart = dentalChart;
-        this.takenBy = takenBy;
+        this.user = user;
         this.filePath = filePath;
         this.createdAt = createdAt;
     }
@@ -73,12 +73,12 @@ public class XrayImage {
         this.dentalChart = dentalChart;
     }
 
-    public User getTakenBy() {
-        return takenBy;
+    public User getUser() {
+        return user;
     }
 
-    public void setTakenBy(User takenBy) {
-        this.takenBy = takenBy;
+    public void setUser(User takenBy) {
+        this.user = takenBy;
     }
 
     public String getFilePath() {

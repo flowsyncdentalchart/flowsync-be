@@ -1,6 +1,6 @@
 package com.flowsync.services.mappers;
 
-import com.flowsync.dto.DentalChartDTO;
+import com.flowsync.dto.DentalChartRequest;
 import com.flowsync.exceptions.ResourceNotFoundException;
 import com.flowsync.models.DentalChart;
 import com.flowsync.models.Patient;
@@ -20,8 +20,8 @@ public class DentalChartMapper {
         this.userRepository = userRepository;
     }
 
-    public DentalChartDTO createDentalChartDTO(Long patientId, Long userId) {
-        return new DentalChartDTO(patientId, userId);
+    public DentalChartRequest createDentalChartDTO(Long patientId, Long userId) {
+        return new DentalChartRequest(patientId, userId);
     }
 
     public void validateFields(DentalChart dentalChart) {
@@ -30,12 +30,12 @@ public class DentalChartMapper {
         }
     }
 
-    public DentalChart createDentalChartFromDTO(DentalChartDTO dentalChartDTO) {
+    public DentalChart createDentalChartFromDTO(DentalChartRequest dentalChartRequest) {
 
-        Patient patient = patientRepository.findById(dentalChartDTO.getPatientId())
+        Patient patient = patientRepository.findById(dentalChartRequest.getPatientId())
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found"));
 
-        User user = userRepository.findById(dentalChartDTO.getUserId())
+        User user = userRepository.findById(dentalChartRequest.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         return new DentalChart(patient, user);

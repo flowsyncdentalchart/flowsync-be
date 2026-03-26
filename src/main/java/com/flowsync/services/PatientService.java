@@ -1,7 +1,7 @@
 package com.flowsync.services;
 
-import com.flowsync.dto.PatientDTO;
-import com.flowsync.dto.PatientResponseDTO;
+import com.flowsync.dto.PatientRequest;
+import com.flowsync.dto.PatientResponse;
 import com.flowsync.exceptions.ResourceNotFoundException;
 import com.flowsync.models.Patient;
 import com.flowsync.repositories.PatientRepository;
@@ -20,12 +20,12 @@ public class PatientService {
         this.patientMapper = patientMapper;
     }
 
-    public Patient createPatient(PatientDTO patientDTO) {
+    public Patient createPatient(PatientRequest patientRequest) {
 
-        return patientRepository.save(patientMapper.createPatientFromPatientDTO(patientDTO));
+        return patientRepository.save(patientMapper.createPatientFromPatientDTO(patientRequest));
     }
 
-    public PatientResponseDTO findPatientById(Long id) {
+    public PatientResponse findPatientById(Long id) {
         Patient tempPatient = patientRepository.findPatientById(id);
 
         if (tempPatient == null) {
@@ -36,19 +36,19 @@ public class PatientService {
 
     }
 
-    public PatientResponseDTO updatePatient(Long id, PatientDTO patientDTO) {
+    public PatientResponse updatePatient(Long id, PatientRequest patientRequest) {
 
         Patient updatedPatient = patientRepository.findPatientById(id);
 
         if (updatedPatient != null) {
-            if (patientDTO.getFirstName() == null && patientDTO.getLastName() == null) {
+            if (patientRequest.getFirstName() == null && patientRequest.getLastName() == null) {
                 throw new IllegalArgumentException("Either first name or last name must be provided");
             } else {
-                if (patientDTO.getFirstName() != null) {
-                    updatedPatient.setFirstName(patientDTO.getFirstName());
+                if (patientRequest.getFirstName() != null) {
+                    updatedPatient.setFirstName(patientRequest.getFirstName());
                 }
-                if (patientDTO.getLastName() != null) {
-                    updatedPatient.setLastName(patientDTO.getLastName());
+                if (patientRequest.getLastName() != null) {
+                    updatedPatient.setLastName(patientRequest.getLastName());
                 }
             }
         } else {

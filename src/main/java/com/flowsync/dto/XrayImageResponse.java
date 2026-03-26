@@ -2,26 +2,26 @@ package com.flowsync.dto;
 
 import java.time.LocalDateTime;
 
-public class XrayImageResponseDTO {
+public class XrayImageResponse {
 
 
     private Long id;
 
-    private String dentalChart;
+    private Long dentalChartId;
 
-    private String takenBy;
+    private Long userId;
 
     private String filePath;
 
     private LocalDateTime createdAt;
 
-    public XrayImageResponseDTO() {
+    public XrayImageResponse() {
     }
 
-    public XrayImageResponseDTO(Long id, String dentalChart, String takenBy, String filePath, LocalDateTime createdAt) {
+    public XrayImageResponse(Long id, Long dentalChartId, Long userId, String filePath, LocalDateTime createdAt) {
         this.id = id;
-        this.dentalChart = dentalChart;
-        this.takenBy = takenBy;
+        this.dentalChartId = dentalChartId;
+        this.userId = userId;
         this.filePath = filePath;
         this.createdAt = createdAt;
     }
@@ -34,20 +34,20 @@ public class XrayImageResponseDTO {
         this.id = id;
     }
 
-    public String getDentalChart() {
-        return dentalChart;
+    public Long getDentalChartId() {
+        return dentalChartId;
     }
 
-    public void setDentalChart(String dentalChart) {
-        this.dentalChart = dentalChart;
+    public void setDentalChartId(Long dentalChartId) {
+        this.dentalChartId = dentalChartId;
     }
 
-    public String getTakenBy() {
-        return takenBy;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setTakenBy(String takenBy) {
-        this.takenBy = takenBy;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getFilePath() {

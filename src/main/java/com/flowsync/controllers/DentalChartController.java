@@ -1,6 +1,6 @@
 package com.flowsync.controllers;
 
-import com.flowsync.dto.DentalChartDTO;
+import com.flowsync.dto.DentalChartRequest;
 import com.flowsync.dto.DentalChartResponse;
 import com.flowsync.models.User;
 import com.flowsync.repositories.DentalChartRepository;
@@ -42,9 +42,9 @@ public class DentalChartController {
 
         Long userId = user.getId();
 
-        DentalChartDTO dentalChartDTO = dentalChartMapper.createDentalChartDTO(patientId, userId);
+        DentalChartRequest dentalChartRequest = dentalChartMapper.createDentalChartDTO(patientId, userId);
 
-        return dentalChartService.createDentalChart(dentalChartDTO);
+        return dentalChartService.createDentalChart(dentalChartRequest);
     }
 
     @GetMapping("/{id}")
@@ -55,9 +55,9 @@ public class DentalChartController {
     }
 
     @PutMapping("/{id}")
-    public DentalChartResponse updateDentalChart(@PathVariable Long id, @RequestBody DentalChartDTO dentalChartDTO) {
+    public DentalChartResponse updateDentalChart(@PathVariable Long id, @RequestBody DentalChartRequest dentalChartRequest) {
 
-        return dentalChartService.updateDentalChart(id, dentalChartDTO);
+        return dentalChartService.updateDentalChart(id, dentalChartRequest);
 
     }
 
