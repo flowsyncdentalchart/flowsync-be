@@ -1,6 +1,5 @@
 package com.flowsync.models;
 
-import com.flowsync.models.enums.Title;
 import com.flowsync.models.enums.ToothState;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -40,7 +38,7 @@ public class Tooth {
     public Tooth() {
     }
 
-    public Tooth(String name, String state, DentalChart dentalChart) {
+    public Tooth(String name, ToothState state, DentalChart dentalChart) {
         this.name = name;
         this.state = state;
         this.dentalChart = dentalChart;
