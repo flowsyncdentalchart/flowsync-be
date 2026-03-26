@@ -41,7 +41,7 @@ public class PatientController {
 
     @GetMapping("/{id}")
     public PatientResponseDTO findPatientById(@PathVariable Long id) {
-        return patientService.findPatientById(id);
+        return patientService.getPatientById(id);
     }
 
     @PutMapping("/{id}")

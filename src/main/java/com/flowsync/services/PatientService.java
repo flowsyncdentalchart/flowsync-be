@@ -25,7 +25,7 @@ public class PatientService {
         return patientRepository.save(patientMapper.createPatientFromPatientDTO(patientDTO));
     }
 
-    public PatientResponseDTO findPatientById(Long id) {
+    public PatientResponseDTO getPatientById(Long id) {
         Patient tempPatient = patientRepository.findPatientById(id);
 
         if (tempPatient == null) {
