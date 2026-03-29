@@ -30,4 +30,5 @@ public class XrayImageController {
         return ResponseEntity.status(HttpStatus.CREATED).body(xrayImageResponse);
     }
 
+
 }
