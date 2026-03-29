@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 public class XrayImageResponse {
 
-
     private Long id;
 
     private Long dentalChartId;

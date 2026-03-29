@@ -27,31 +27,28 @@ public class XrayImageController {
     }
 
     @PostMapping
-    public ResponseEntity<XrayImageResponse> uploadXray(
-            @RequestBody @Valid XrayImageRequest xrayImageRequest) {
+    public ResponseEntity<XrayImageResponse> uploadXray(@RequestBody @Valid XrayImageRequest xrayImageRequest) {
 
         XrayImageResponse xrayImageResponse = xrayImageService.uploadXray(xrayImageRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(xrayImageResponse);
     }
 
-    @GetMapping("/{id}") ResponseEntity<XrayImageResponse> getXrayById(
-            @PathVariable Long id) {
+    @GetMapping("/{id}")
+    ResponseEntity<XrayImageResponse> getXrayById(@PathVariable Long id) {
         XrayImageResponse xrayImageResponse = xrayImageService.getXrayImageById(id);
         return ResponseEntity.ok(xrayImageResponse);
     }
 
-    @GetMapping("/dental-chart/{dentalChartId}") ResponseEntity<List<XrayImageResponse>> getAllXrayByDentalChartId(
-            @PathVariable Long dentalChartId) {
+    @GetMapping("/dental-chart/{dentalChartId}")
+    ResponseEntity<List<XrayImageResponse>> getAllXrayByDentalChartId(@PathVariable Long dentalChartId) {
         List<XrayImageResponse> xrayImageResponse = xrayImageService.getAllXrayByDentalChartId(dentalChartId);
         return ResponseEntity.ok(xrayImageResponse);
     }
 
-    @GetMapping("/patients/{patientId}") ResponseEntity<List<XrayImageResponse>> getAllXrayByDentalByPatientId(
-            @PathVariable Long patientId) {
+    @GetMapping("/patients/{patientId}")
+    ResponseEntity<List<XrayImageResponse>> getAllXrayByDentalByPatientId(@PathVariable Long patientId) {
         List<XrayImageResponse> xrayImageResponse = xrayImageService.getAllXrayByDentalByPatientId(patientId);
         return ResponseEntity.ok(xrayImageResponse);
     }
-
-
 
 }

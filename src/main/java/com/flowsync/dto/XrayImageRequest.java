@@ -2,7 +2,6 @@ package com.flowsync.dto;
 
 public class XrayImageRequest {
 
-
     private Long dentalChartId;
 
     private Long userId;

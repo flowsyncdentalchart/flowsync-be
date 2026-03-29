@@ -25,7 +25,9 @@ public class XrayImageService {
     private final XrayImageMapper xrayImageMapper;
     private final PatientRepository patientRepository;
 
-    public XrayImageService(DentalChartRepository dentalChartRepository, UserRepository userRepository, XrayImageFactory xrayImageFactory, XrayImageRepository xrayImageRepository, XrayImageMapper xrayImageMapper, PatientRepository patientRepository) {
+    public XrayImageService(DentalChartRepository dentalChartRepository, UserRepository userRepository,
+            XrayImageFactory xrayImageFactory, XrayImageRepository xrayImageRepository, XrayImageMapper xrayImageMapper,
+            PatientRepository patientRepository) {
         this.dentalChartRepository = dentalChartRepository;
         this.userRepository = userRepository;
         this.xrayImageFactory = xrayImageFactory;
@@ -51,7 +53,7 @@ public class XrayImageService {
     }
 
     public List<XrayImageResponse> getAllXrayByDentalChartId(Long dentalChartId) {
-       dentalChartRepository.findById(dentalChartId)
+        dentalChartRepository.findById(dentalChartId)
                 .orElseThrow(() -> new ResourceNotFoundException("Dental chart not found"));
         List<XrayImage> xrayImageList = xrayImageRepository.findAllByDentalChartId(dentalChartId);
         List<XrayImageResponse> xrayImageResponseList = xrayImageMapper.toResponse(xrayImageList);
@@ -59,8 +61,7 @@ public class XrayImageService {
     }
 
     public List<XrayImageResponse> getAllXrayByDentalByPatientId(Long patientId) {
-        patientRepository.findById(patientId)
-                .orElseThrow(() -> new ResourceNotFoundException("Patient not found"));
+        patientRepository.findById(patientId).orElseThrow(() -> new ResourceNotFoundException("Patient not found"));
         List<XrayImage> xrayImageList = xrayImageRepository.findAllByDentalChart_Patient_Id(patientId);
         List<XrayImageResponse> xrayImageResponseList = xrayImageMapper.toResponse(xrayImageList);
         return xrayImageResponseList;

@@ -39,15 +39,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, CorsConfigurationSource corsConfigurationSource)
             throws Exception {
 
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource))
-                .csrf(csrf -> csrf.disable()).logout(logout -> logout.disable())
-                .authorizeHttpRequests(
-                        auth -> auth.requestMatchers("/login").permitAll().requestMatchers("/logout/**").permitAll()
-                                .requestMatchers("/check/**").permitAll().requestMatchers("/api/user/**").permitAll()
-                                .requestMatchers("/api/dental-charts/**").permitAll()
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource)).csrf(csrf -> csrf.disable())
+                .logout(logout -> logout.disable())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/login").permitAll().requestMatchers("/logout/**")
+                        .permitAll().requestMatchers("/check/**").permitAll().requestMatchers("/api/user/**")
+                        .permitAll().requestMatchers("/api/dental-charts/**").permitAll()
 
-
-                                .anyRequest().authenticated())
+                        .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

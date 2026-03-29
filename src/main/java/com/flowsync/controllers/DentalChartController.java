@@ -55,7 +55,8 @@ public class DentalChartController {
     }
 
     @PutMapping("/{id}")
-    public DentalChartResponse updateDentalChart(@PathVariable Long id, @RequestBody DentalChartRequest dentalChartRequest) {
+    public DentalChartResponse updateDentalChart(@PathVariable Long id,
+            @RequestBody DentalChartRequest dentalChartRequest) {
 
         return dentalChartService.updateDentalChart(id, dentalChartRequest);
 

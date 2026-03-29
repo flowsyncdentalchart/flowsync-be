@@ -19,7 +19,8 @@ public class UserService {
     }
 
     public UserResponse getUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
         UserResponse userResponse = userMapper.convertUserEntityToUserResponse(user);
         return userResponse;
 

@@ -56,8 +56,9 @@ public class DentalChartService {
         }
 
         if (dentalChartRequest.getUserId() != null) {
-            updatedDentalChart.setUser(userRepository.findById(dentalChartRequest.getUserId()).orElseThrow(
-                    () -> new ResourceNotFoundException("User with id " + dentalChartRequest.getUserId() + " not found")));
+            updatedDentalChart.setUser(userRepository.findById(dentalChartRequest.getUserId())
+                    .orElseThrow(() -> new ResourceNotFoundException(
+                            "User with id " + dentalChartRequest.getUserId() + " not found")));
         }
 
         dentalChartRepository.save(updatedDentalChart);

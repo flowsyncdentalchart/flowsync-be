@@ -37,10 +37,7 @@ public class XrayImage {
     @Column(nullable = false, unique = true)
     @Size(max = 500, message = "File path too long")
     @NotNull(message = "Xray image file path must not be null")
-    @Pattern(
-            regexp = "^(https?:\\/\\/.*|\\/.*)$",
-            message = "File path must be a valid URL or absolute path"
-    )
+    @Pattern(regexp = "^(https?:\\/\\/.*|\\/.*)$", message = "File path must be a valid URL or absolute path")
     private String filePath;
 
     @Column(name = "created_at", nullable = false, updatable = false)

@@ -31,9 +31,9 @@ public class XrayImageMapper {
         return response;
     }
 
-    public List<XrayImageResponse> toResponse (List<XrayImage> xrayImages) {
+    public List<XrayImageResponse> toResponse(List<XrayImage> xrayImages) {
         List<XrayImageResponse> xrayImageResponses = new ArrayList<>();
-        for(XrayImage xrayImage : xrayImages) {
+        for (XrayImage xrayImage : xrayImages) {
             xrayImageResponses.add(toResponse(xrayImage));
         }
         return xrayImageResponses;
