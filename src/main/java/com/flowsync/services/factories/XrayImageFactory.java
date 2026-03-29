@@ -15,10 +15,7 @@ public class XrayImageFactory {
         this.authenticationService = authenticationService;
     }
 
-    public XrayImage createXrayImageEntity(DentalChart dentalChart, String filePath) {
-
-        User user = authenticationService.getLoggedInUser();
-
+    public XrayImage createXrayImageEntity(DentalChart dentalChart, String filePath, User user) {
         XrayImage xrayImage = new XrayImage();
         xrayImage.setDentalChart(dentalChart);
         xrayImage.setUser(user);

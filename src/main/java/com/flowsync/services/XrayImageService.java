@@ -4,6 +4,7 @@ import com.flowsync.dto.XrayImageRequest;
 import com.flowsync.dto.XrayImageResponse;
 import com.flowsync.exceptions.ResourceNotFoundException;
 import com.flowsync.models.DentalChart;
+import com.flowsync.models.User;
 import com.flowsync.models.XrayImage;
 import com.flowsync.repositories.DentalChartRepository;
 import com.flowsync.repositories.PatientRepository;
@@ -36,12 +37,11 @@ public class XrayImageService {
         this.patientRepository = patientRepository;
     }
 
-    public XrayImageResponse uploadXray(XrayImageRequest xrayImageRequest) {
+    public XrayImageResponse uploadXray(XrayImageRequest xrayImageRequest, User user) {
         DentalChart dentalChart = dentalChartRepository.findById(xrayImageRequest.getDentalChartId())
                 .orElseThrow(() -> new ResourceNotFoundException("DentalChart not found"));
-        XrayImage xrayImage = xrayImageFactory.createXrayImageEntity(dentalChart, xrayImageRequest.getFilePath());
+        XrayImage xrayImage = xrayImageFactory.createXrayImageEntity(dentalChart, xrayImageRequest.getFilePath(), user);
         XrayImage savedXrayImage = xrayImageRepository.save(xrayImage);
-        xrayImageMapper.toResponse(savedXrayImage);
         return xrayImageMapper.toResponse(savedXrayImage);
     }
 

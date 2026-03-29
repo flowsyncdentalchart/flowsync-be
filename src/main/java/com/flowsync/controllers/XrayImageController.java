@@ -2,6 +2,8 @@ package com.flowsync.controllers;
 
 import com.flowsync.dto.XrayImageRequest;
 import com.flowsync.dto.XrayImageResponse;
+import com.flowsync.models.User;
+import com.flowsync.services.AuthenticationService;
 import com.flowsync.services.XrayImageService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -20,16 +22,21 @@ import java.util.List;
 public class XrayImageController {
 
     private final XrayImageService xrayImageService;
+    private final AuthenticationService authenticationService;
 
-    public XrayImageController(XrayImageService xrayImageService) {
+    public XrayImageController(XrayImageService xrayImageService, AuthenticationService authenticationService) {
         this.xrayImageService = xrayImageService;
+        this.authenticationService = authenticationService;
 
     }
 
     @PostMapping
     public ResponseEntity<XrayImageResponse> uploadXray(@RequestBody @Valid XrayImageRequest xrayImageRequest) {
 
-        XrayImageResponse xrayImageResponse = xrayImageService.uploadXray(xrayImageRequest);
+        User user = authenticationService.getLoggedInUser();
+
+        XrayImageResponse xrayImageResponse = xrayImageService.uploadXray(xrayImageRequest, user);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(xrayImageResponse);
     }
 

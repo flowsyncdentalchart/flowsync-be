@@ -25,7 +25,7 @@ public class XrayImageMapper {
         XrayImageResponse response = new XrayImageResponse();
         response.setId(xrayImage.getId());
         response.setDentalChartId(xrayImage.getDentalChart().getId());
-        response.setUserId(xrayImage.getId());
+        response.setUserId(xrayImage.getUser().getId());
         response.setFilePath(xrayImage.getFilePath());
         response.setCreatedAt(xrayImage.getCreatedAt());
         return response;
