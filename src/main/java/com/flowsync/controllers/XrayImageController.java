@@ -53,9 +53,8 @@ public class XrayImageController {
     }
 
     @GetMapping("/patients/{patientId}")
-    ResponseEntity<List<XrayImageResponse>> getAllXrayByDentalByPatientId(@PathVariable Long patientId) {
-        List<XrayImageResponse> xrayImageResponse = xrayImageService.getAllXrayByDentalByPatientId(patientId);
+    ResponseEntity<List<XrayImageResponse>> getAllXrayByPatientId(@PathVariable Long patientId) {
+        List<XrayImageResponse> xrayImageResponse = xrayImageService.getAllXrayByPatientId(patientId);
         return ResponseEntity.ok(xrayImageResponse);
     }
-
 }

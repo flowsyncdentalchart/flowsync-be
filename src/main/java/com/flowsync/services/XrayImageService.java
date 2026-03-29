@@ -60,7 +60,7 @@ public class XrayImageService {
         return xrayImageResponseList;
     }
 
-    public List<XrayImageResponse> getAllXrayByDentalByPatientId(Long patientId) {
+    public List<XrayImageResponse> getAllXrayByPatientId(Long patientId) {
         patientRepository.findById(patientId).orElseThrow(() -> new ResourceNotFoundException("Patient not found"));
         List<XrayImage> xrayImageList = xrayImageRepository.findAllByDentalChart_Patient_Id(patientId);
         List<XrayImageResponse> xrayImageResponseList = xrayImageMapper.toResponse(xrayImageList);
