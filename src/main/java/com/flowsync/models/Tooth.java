@@ -38,18 +38,10 @@ public class Tooth {
     @JoinColumn(name = "dental-chart-id", nullable = false)
     private DentalChart dentalChart;
     @ManyToMany
-    @JoinTable(
-            name = "tooth_diagnoses",
-            joinColumns = @JoinColumn(name = "tooth_id"),
-            inverseJoinColumns = @JoinColumn(name = "diagonsis_id")
-    )
+    @JoinTable(name = "tooth_diagnoses", joinColumns = @JoinColumn(name = "tooth_id"), inverseJoinColumns = @JoinColumn(name = "diagonsis_id"))
     private Set<Diagnosis> diagnoses = new HashSet<>();
     @ManyToMany
-    @JoinTable(
-            name = "tooth_restorations",
-            joinColumns = @JoinColumn(name = "tooth_id"),
-            inverseJoinColumns = @JoinColumn(name = "restoration_id")
-    )
+    @JoinTable(name = "tooth_restorations", joinColumns = @JoinColumn(name = "tooth_id"), inverseJoinColumns = @JoinColumn(name = "restoration_id"))
     private Set<Restoration> restorations = new HashSet<>();
     @CreationTimestamp
     private Date createdAt;

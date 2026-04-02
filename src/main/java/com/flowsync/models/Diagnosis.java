@@ -18,7 +18,6 @@ public class Diagnosis {
     @Column(nullable = false)
     private String name;
 
-
     public Diagnosis() {
     }
 

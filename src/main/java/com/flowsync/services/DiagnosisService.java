@@ -18,7 +18,7 @@ public class DiagnosisService {
         this.diagnosisRepository = diagnosisRepository;
     }
 
-    public DiagnosisResponse getDiagnosisById (Long id) {
+    public DiagnosisResponse getDiagnosisById(Long id) {
         Diagnosis diagnosis = diagnosisRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Diagnosis not found"));
 

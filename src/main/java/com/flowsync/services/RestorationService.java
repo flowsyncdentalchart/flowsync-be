@@ -18,17 +18,18 @@ public class RestorationService {
         this.restorationRepository = restorationRepository;
     }
 
-    public RestorationResponse getRestorationById(Long id){
+    public RestorationResponse getRestorationById(Long id) {
         Restoration restoration = restorationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Restoration with id " + id + " not found"));
         return new RestorationResponse(restoration.getId(), restoration.getName(), restoration.getMaterial());
     }
 
-    public List<RestorationResponse> getAllRestorations(){
+    public List<RestorationResponse> getAllRestorations() {
         List<RestorationResponse> restorationResponses = new ArrayList<>();
         List<Restoration> restorations = restorationRepository.findAll();
-        for(Restoration restoration : restorations){
-            restorationResponses.add(new RestorationResponse(restoration.getId(), restoration.getName(), restoration.getMaterial()));
+        for (Restoration restoration : restorations) {
+            restorationResponses.add(
+                    new RestorationResponse(restoration.getId(), restoration.getName(), restoration.getMaterial()));
         }
         return restorationResponses;
     }
