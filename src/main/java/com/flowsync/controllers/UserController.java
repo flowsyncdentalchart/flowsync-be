@@ -1,7 +1,6 @@
 package com.flowsync.controllers;
 
 import com.flowsync.dto.UserResponse;
-import com.flowsync.models.User;
 import com.flowsync.services.UserService;
 import com.flowsync.services.mappers.UserMapper;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +23,6 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
-        User user = userService.getUserById(id);
-        UserResponse userResponse = userMapper.convertUserEntityToUserResponse(user);
-        return ResponseEntity.ok(userResponse);
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 }

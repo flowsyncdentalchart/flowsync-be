@@ -1,6 +1,6 @@
 package com.flowsync.services;
 
-import com.flowsync.dto.DentalChartDTO;
+import com.flowsync.dto.DentalChartRequest;
 import com.flowsync.dto.DentalChartResponse;
 import com.flowsync.exceptions.ResourceNotFoundException;
 import com.flowsync.models.DentalChart;
@@ -27,10 +27,10 @@ public class DentalChartService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity createDentalChart(DentalChartDTO dentalChartDTO) {
+    public ResponseEntity createDentalChart(DentalChartRequest dentalChartRequest) {
 
         DentalChart dentalChart = dentalChartRepository
-                .save(dentalChartMapper.createDentalChartFromDTO(dentalChartDTO));
+                .save(dentalChartMapper.createDentalChartFromDTO(dentalChartRequest));
         return ResponseEntity.ok("Dental Chart created with id " + dentalChart.getId());
     }
 
@@ -45,19 +45,20 @@ public class DentalChartService {
 
     }
 
-    public DentalChartResponse updateDentalChart(Long id, DentalChartDTO dentalChartDTO) {
+    public DentalChartResponse updateDentalChart(Long id, DentalChartRequest dentalChartRequest) {
         DentalChart updatedDentalChart = dentalChartRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Dental Chart with id " + id + " not found"));
 
-        if (dentalChartDTO.getPatientId() != null) {
-            updatedDentalChart.setPatient(patientRepository.findById(dentalChartDTO.getPatientId())
+        if (dentalChartRequest.getPatientId() != null) {
+            updatedDentalChart.setPatient(patientRepository.findById(dentalChartRequest.getPatientId())
                     .orElseThrow(() -> new ResourceNotFoundException(
-                            "Patient with id " + dentalChartDTO.getPatientId() + " not found")));
+                            "Patient with id " + dentalChartRequest.getPatientId() + " not found")));
         }
 
-        if (dentalChartDTO.getUserId() != null) {
-            updatedDentalChart.setUser(userRepository.findById(dentalChartDTO.getUserId()).orElseThrow(
-                    () -> new ResourceNotFoundException("User with id " + dentalChartDTO.getUserId() + " not found")));
+        if (dentalChartRequest.getUserId() != null) {
+            updatedDentalChart.setUser(userRepository.findById(dentalChartRequest.getUserId())
+                    .orElseThrow(() -> new ResourceNotFoundException(
+                            "User with id " + dentalChartRequest.getUserId() + " not found")));
         }
 
         dentalChartRepository.save(updatedDentalChart);
