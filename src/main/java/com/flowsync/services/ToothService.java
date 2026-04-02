@@ -11,7 +11,6 @@ import com.flowsync.repositories.DentalChartRepository;
 import com.flowsync.repositories.DiagnosisRepository;
 import com.flowsync.repositories.RestorationRepository;
 import com.flowsync.repositories.ToothRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -82,9 +81,9 @@ public class ToothService {
     @Transactional
     public void addDiagnosisToTooth(Long toothId, Long diagnosisId) {
         Tooth tooth = toothRepository.findById(toothId)
-                .orElseThrow(() -> new EntityNotFoundException("Tooth not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Tooth not found"));
         Diagnosis diagnosis = diagnosisRepository.findById(diagnosisId)
-                .orElseThrow(() -> new EntityNotFoundException("Diagnosis not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Diagnosis not found"));
 
         tooth.addDiagnosis(diagnosis);
         // no need to call save() — @Transactional handles dirty checking
@@ -93,9 +92,9 @@ public class ToothService {
     @Transactional
     public void removeDiagnosisFromTooth(Long toothId, Long diagnosisId) {
         Tooth tooth = toothRepository.findById(toothId)
-                .orElseThrow(() -> new EntityNotFoundException("Tooth not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Tooth not found"));
         Diagnosis diagnosis = diagnosisRepository.findById(diagnosisId)
-                .orElseThrow(() -> new EntityNotFoundException("Diagnosis not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Diagnosis not found"));
 
         tooth.removeDiagnosis(diagnosis);
     }
@@ -103,9 +102,9 @@ public class ToothService {
     @Transactional
     public void addRestorationToTooth(Long toothId, Long restorationId) {
         Tooth tooth = toothRepository.findById(toothId)
-                .orElseThrow(() -> new EntityNotFoundException("Tooth not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Tooth not found"));
         Restoration restoration = restorationRepository.findById(restorationId)
-                .orElseThrow(() -> new EntityNotFoundException("Restoration not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Restoration not found"));
 
         tooth.addRestoration(restoration);
     }
@@ -113,9 +112,9 @@ public class ToothService {
     @Transactional
     public void removeRestorationFromTooth(Long toothId, Long restorationId) {
         Tooth tooth = toothRepository.findById(toothId)
-                .orElseThrow(() -> new EntityNotFoundException("Tooth not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Tooth not found"));
         Restoration restoration = restorationRepository.findById(restorationId)
-                .orElseThrow(() -> new EntityNotFoundException("Restoration not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Restoration not found"));
 
         tooth.removeRestoration(restoration);
     }
