@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/diagnoses")
 public class DiagnosisController {
@@ -20,5 +22,10 @@ public class DiagnosisController {
     @GetMapping("/{id}")
     public DiagnosisResponse getDiagnosisById(@PathVariable Long id) {
         return diagnosisService.getDiagnosisById(id);
+    }
+
+    @GetMapping
+    public List<DiagnosisResponse> getAllDiagnoses() {
+        return diagnosisService.getAllDiagnoses();
     }
 }

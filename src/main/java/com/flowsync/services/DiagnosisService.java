@@ -6,6 +6,9 @@ import com.flowsync.models.Diagnosis;
 import com.flowsync.repositories.DiagnosisRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class DiagnosisService {
 
@@ -21,5 +24,14 @@ public class DiagnosisService {
 
         return new DiagnosisResponse(diagnosis.getId(), diagnosis.getName());
 
+    }
+
+    public List<DiagnosisResponse> getAllDiagnoses() {
+        List<DiagnosisResponse> diagnosisResponses = new ArrayList<>();
+        List<Diagnosis> diagnoses = diagnosisRepository.findAll();
+        for (Diagnosis diagnosis : diagnoses) {
+            diagnosisResponses.add(new DiagnosisResponse(diagnosis.getId(), diagnosis.getName()));
+        }
+        return diagnosisResponses;
     }
 }
