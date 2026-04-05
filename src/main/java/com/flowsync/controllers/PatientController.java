@@ -1,7 +1,7 @@
 package com.flowsync.controllers;
 
-import com.flowsync.dto.PatientDTO;
-import com.flowsync.dto.PatientResponseDTO;
+import com.flowsync.dto.PatientRequest;
+import com.flowsync.dto.PatientResponse;
 import com.flowsync.models.Patient;
 import com.flowsync.services.PatientService;
 import com.flowsync.services.mappers.PatientMapper;
@@ -32,21 +32,21 @@ public class PatientController {
 
         patientMapper.validateFields(patient);
 
-        PatientDTO patientDTO = patientMapper.createPatientDTOFromPatient(patient);
+        PatientRequest patientRequest = patientMapper.createPatientDTOFromPatient(patient);
 
-        Patient newPatient = patientService.createPatient(patientDTO);
+        Patient newPatient = patientService.createPatient(patientRequest);
 
         return ResponseEntity.ok("Patient created with id " + newPatient.getId());
     }
 
     @GetMapping("/{id}")
-    public PatientResponseDTO findPatientById(@PathVariable Long id) {
+    public PatientResponse findPatientById(@PathVariable Long id) {
         return patientService.findPatientById(id);
     }
 
     @PutMapping("/{id}")
-    public PatientResponseDTO updatePatient(@PathVariable Long id, @RequestBody PatientDTO patientDTO) {
-        return patientService.updatePatient(id, patientDTO);
+    public PatientResponse updatePatient(@PathVariable Long id, @RequestBody PatientRequest patientRequest) {
+        return patientService.updatePatient(id, patientRequest);
     }
 
     @DeleteMapping("/{id}")

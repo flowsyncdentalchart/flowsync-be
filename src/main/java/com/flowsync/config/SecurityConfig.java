@@ -39,19 +39,14 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, CorsConfigurationSource corsConfigurationSource)
             throws Exception {
 
-        // configuram CORS
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource))
-                // CSRF, dezactivat in dev
-                .csrf(csrf -> csrf.disable()).logout(logout -> logout.disable())
-                // definim regulile URL
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource)).csrf(csrf -> csrf.disable())
+                .logout(logout -> logout.disable())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/login").permitAll().requestMatchers("/logout/**")
-                        .permitAll().requestMatchers("/check/**").permitAll()
+                        .permitAll().requestMatchers("/check/**").permitAll().requestMatchers("/api/user/**")
+                        .permitAll().requestMatchers("/api/dental-charts/**").permitAll()
 
-                        // orice alte request-uri, user-ul trebuie sa fie logat
                         .anyRequest().authenticated())
-                // dezactivam sesiunea din cauza ca jwt nu are state
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // adaugam filtru jwt inainte de filtrul standart
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
