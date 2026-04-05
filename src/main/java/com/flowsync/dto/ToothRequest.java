@@ -1,22 +1,23 @@
 package com.flowsync.dto;
 
+import com.flowsync.models.enums.ToothName;
 import com.flowsync.models.enums.ToothState;
 
 public class ToothRequest {
-    private String name;
+    private ToothName name;
     private ToothState state;
     private Long dentalChartId;
 
     public ToothRequest() {
     }
 
-    public ToothRequest(String name, ToothState state, Long dentalChartId) {
+    public ToothRequest(ToothName name, ToothState state, Long dentalChartId) {
         this.name = name;
         this.state = state;
         this.dentalChartId = dentalChartId;
     }
 
-    public String getName() {
+    public ToothName getName() {
         return name;
     }
 
