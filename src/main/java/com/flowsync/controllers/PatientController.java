@@ -5,6 +5,7 @@ import com.flowsync.dto.PatientResponse;
 import com.flowsync.models.Patient;
 import com.flowsync.services.PatientService;
 import com.flowsync.services.mappers.PatientMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/patient")
@@ -47,9 +47,12 @@ public class PatientController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PatientResponse>> getAllPatients() {
-        List<PatientResponse> patients = patientService.getAllPatients();
-        return ResponseEntity.ok(patients);
+    public Page<PatientResponse> getAllPatients(
+            @RequestParam int page,
+            @RequestParam int size,
+            @RequestParam(required = false) String search
+    ) {
+        return patientService.getAllPatients(page, size, search);
     }
 
     @PutMapping("/{id}")

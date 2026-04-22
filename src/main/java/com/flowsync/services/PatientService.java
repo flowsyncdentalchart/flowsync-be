@@ -6,10 +6,11 @@ import com.flowsync.exceptions.ResourceNotFoundException;
 import com.flowsync.models.Patient;
 import com.flowsync.repositories.PatientRepository;
 import com.flowsync.services.mappers.PatientMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class PatientService {
@@ -38,6 +39,23 @@ public class PatientService {
 
     }
 
+    public Page<PatientResponse> getAllPatients(int page, int size, String search) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Patient> result;
+
+        if (search == null || search.isBlank()) {
+            result = patientRepository.findAll(pageable);
+        } else {
+            result = patientRepository
+                    .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(
+                            search, search, pageable
+                    );
+        }
+
+        return result.map(patientMapper::createPatientResponseDTOFromPatient);
+    }
     public PatientResponse updatePatient(Long id, PatientRequest patientRequest) {
 
         Patient updatedPatient = patientRepository.findPatientById(id);
@@ -72,15 +90,6 @@ public class PatientService {
 
         patientRepository.deleteById(id);
         return ResponseEntity.ok("Deleted successfully");
-    }
-
-    public List<PatientResponse> getAllPatients(){
-        List<Patient> patients = patientRepository.findAll();
-        if (patients == null){
-            throw new ResourceNotFoundException("Patient not found");
-        }
-        List<PatientResponse> patientResponseList = patientMapper.createPatientResponseDTOFromPatient(patients);
-        return patientResponseList;
     }
 
 }
