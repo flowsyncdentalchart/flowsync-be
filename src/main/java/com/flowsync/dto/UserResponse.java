@@ -1,16 +1,20 @@
 package com.flowsync.dto;
 
+import com.flowsync.models.enums.Title;
+
 public class UserResponse {
     private Long id;
     private String username;
     private String firstName;
     private String lastName;
+    private Title title;
 
-    public UserResponse(Long id, String username, String firstName, String lastName) {
+    public UserResponse(Long id, String username, String firstName, String lastName, Title title) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.title = title;
     }
 
     public UserResponse() {
@@ -46,5 +50,13 @@ public class UserResponse {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Title getTitle() {
+        return title;
+    }
+
+    public void setTitle(Title title) {
+        this.title = title;
     }
 }

@@ -5,6 +5,8 @@ import com.flowsync.dto.PatientResponse;
 import com.flowsync.models.Patient;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PatientMapper {
 
@@ -29,5 +31,13 @@ public class PatientMapper {
         return new PatientResponse(patient.getId(), patient.getFirstName(), patient.getLastName());
 
     }
+
+    public List<PatientResponse> createPatientResponseDTOFromPatient(List<Patient> patients) {
+        return patients.stream()
+                .map(this::createPatientResponseDTOFromPatient)
+                .toList();
+    }
+
+
 
 }

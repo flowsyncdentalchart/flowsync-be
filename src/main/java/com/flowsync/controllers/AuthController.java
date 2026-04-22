@@ -2,6 +2,7 @@ package com.flowsync.controllers;
 
 import com.flowsync.dto.AuthRequest;
 import com.flowsync.dto.AuthResponse;
+import com.flowsync.dto.UserResponse;
 import com.flowsync.exceptions.UnauthorizedException;
 import com.flowsync.models.User;
 import com.flowsync.repositories.UserRepository;
@@ -82,7 +83,13 @@ public class AuthController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = authService.findByUsername(userDetails.getUsername());
 
-        return ResponseEntity.ok("" + user.getUsername() + ", " + user.getFirstName() + " " + user.getLastName());
+        return ResponseEntity.ok(new UserResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getTitle()
+        ));
     }
 
     @PostMapping("/logout")

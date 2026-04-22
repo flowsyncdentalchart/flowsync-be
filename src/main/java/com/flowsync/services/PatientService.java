@@ -9,6 +9,8 @@ import com.flowsync.services.mappers.PatientMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PatientService {
 
@@ -70,6 +72,15 @@ public class PatientService {
 
         patientRepository.deleteById(id);
         return ResponseEntity.ok("Deleted successfully");
+    }
+
+    public List<PatientResponse> getAllPatients(){
+        List<Patient> patients = patientRepository.findAll();
+        if (patients == null){
+            throw new ResourceNotFoundException("Patient not found");
+        }
+        List<PatientResponse> patientResponseList = patientMapper.createPatientResponseDTOFromPatient(patients);
+        return patientResponseList;
     }
 
 }

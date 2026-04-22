@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/patient")
 public class PatientController {
@@ -42,6 +44,12 @@ public class PatientController {
     @GetMapping("/{id}")
     public PatientResponse findPatientById(@PathVariable Long id) {
         return patientService.findPatientById(id);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PatientResponse>> getAllPatients() {
+        List<PatientResponse> patients = patientService.getAllPatients();
+        return ResponseEntity.ok(patients);
     }
 
     @PutMapping("/{id}")
