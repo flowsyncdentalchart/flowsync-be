@@ -38,7 +38,7 @@ public class PatientController {
 
         Patient newPatient = patientService.createPatient(patientRequest);
 
-        return ResponseEntity.ok("Patient created with id " + newPatient.getId());
+        return ResponseEntity.ok(newPatient);
     }
 
     @GetMapping("/{id}")
