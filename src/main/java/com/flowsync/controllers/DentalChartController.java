@@ -36,7 +36,7 @@ public class DentalChartController {
     }
 
     @PostMapping("/{patientId}")
-    public ResponseEntity createDentalChart(@PathVariable Long patientId) {
+    public DentalChartResponse createDentalChart(@PathVariable Long patientId) {
 
         User user = authenticationService.getLoggedInUser();
 
