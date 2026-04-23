@@ -89,12 +89,20 @@ public class Tooth {
         this.diagnoses.add(diagnosis);
     }
 
+    public Set<Diagnosis> getDiagnoses() {
+        return diagnoses;
+    }
+
     public void removeDiagnosis(Diagnosis diagnosis) {
         this.diagnoses.remove(diagnosis);
     }
 
     public void addRestoration(Restoration restoration) {
         this.restorations.add(restoration);
+    }
+
+    public Set<Restoration> getRestorations() {
+        return restorations;
     }
 
     public void removeRestoration(Restoration restoration) {

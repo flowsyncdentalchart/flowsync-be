@@ -1,5 +1,7 @@
 package com.flowsync.services;
 
+import com.flowsync.dto.DiagnosisResponse;
+import com.flowsync.dto.RestorationResponse;
 import com.flowsync.dto.ToothRequest;
 import com.flowsync.dto.ToothResponse;
 import com.flowsync.exceptions.ResourceNotFoundException;
@@ -11,11 +13,12 @@ import com.flowsync.repositories.DentalChartRepository;
 import com.flowsync.repositories.DiagnosisRepository;
 import com.flowsync.repositories.RestorationRepository;
 import com.flowsync.repositories.ToothRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ToothService {
@@ -89,6 +92,14 @@ public class ToothService {
         // no need to call save() — @Transactional handles dirty checking
     }
 
+    @Transactional(readOnly = true)
+    public List<DiagnosisResponse> getDiagnosesByToothId(Long toothId) {
+        Tooth tooth = toothRepository.findById(toothId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tooth not found"));
+        return tooth.getDiagnoses().stream().map(d -> new DiagnosisResponse(d.getId(), d.getName()))
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public void removeDiagnosisFromTooth(Long toothId, Long diagnosisId) {
         Tooth tooth = toothRepository.findById(toothId)
@@ -107,6 +118,15 @@ public class ToothService {
                 .orElseThrow(() -> new ResourceNotFoundException("Restoration not found"));
 
         tooth.addRestoration(restoration);
+    }
+
+    @Transactional(readOnly = true)
+    public List<RestorationResponse> getRestorationsByToothId(Long toothId) {
+        Tooth tooth = toothRepository.findById(toothId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tooth not found"));
+        return tooth.getRestorations().stream()
+                .map(r -> new RestorationResponse(r.getId(), r.getName(), r.getMaterial()))
+                .collect(Collectors.toList());
     }
 
     @Transactional

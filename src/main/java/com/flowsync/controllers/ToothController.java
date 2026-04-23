@@ -1,5 +1,7 @@
 package com.flowsync.controllers;
 
+import com.flowsync.dto.DiagnosisResponse;
+import com.flowsync.dto.RestorationResponse;
 import com.flowsync.dto.ToothRequest;
 import com.flowsync.dto.ToothResponse;
 import com.flowsync.services.ToothService;
@@ -54,6 +56,12 @@ public class ToothController {
         return ResponseEntity.ok("Diagnosis added to tooth");
     }
 
+    @GetMapping("/{toothId}/diagnoses")
+    public List<DiagnosisResponse> getDiagnosesByToothId(@PathVariable Long toothId) {
+        return toothService.getDiagnosesByToothId(toothId);
+
+    }
+
     @DeleteMapping("/{toothId}/diagnoses/{diagnosisId}")
     public ResponseEntity<String> removeDiagnosis(@PathVariable Long toothId, @PathVariable Long diagnosisId) {
         toothService.removeDiagnosisFromTooth(toothId, diagnosisId);
@@ -64,6 +72,12 @@ public class ToothController {
     public ResponseEntity<String> addRestoration(@PathVariable Long toothId, @PathVariable Long restorationId) {
         toothService.addRestorationToTooth(toothId, restorationId);
         return ResponseEntity.ok("Restoration added");
+    }
+
+    @GetMapping("/{toothId}/restorations")
+    public List<RestorationResponse> getRestorationsByToothId(@PathVariable Long toothId) {
+        return toothService.getRestorationsByToothId(toothId);
+
     }
 
     @DeleteMapping("/{toothId}/restorations/{restorationId}")
