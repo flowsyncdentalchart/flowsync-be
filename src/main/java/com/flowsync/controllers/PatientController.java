@@ -49,11 +49,8 @@ public class PatientController {
     }
 
     @GetMapping
-    public Page<PatientResponse> getAllPatients(
-            @RequestParam int page,
-            @RequestParam int size,
-            @RequestParam(required = false) String search
-    ) {
+    public Page<PatientResponse> getAllPatients(@RequestParam int page, @RequestParam int size,
+            @RequestParam(required = false) String search) {
         return patientService.getAllPatients(page, size, search);
     }
 

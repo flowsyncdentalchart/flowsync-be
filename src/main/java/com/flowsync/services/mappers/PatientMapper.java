@@ -33,11 +33,7 @@ public class PatientMapper {
     }
 
     public List<PatientResponse> createPatientResponseDTOFromPatient(List<Patient> patients) {
-        return patients.stream()
-                .map(this::createPatientResponseDTOFromPatient)
-                .toList();
+        return patients.stream().map(this::createPatientResponseDTOFromPatient).toList();
     }
-
-
 
 }

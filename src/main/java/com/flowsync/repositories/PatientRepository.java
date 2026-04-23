@@ -11,9 +11,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     Patient findPatientById(long id);
 
-    Page<Patient> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(
-            String first, String last, Pageable pageable
-    );
+    Page<Patient> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String first, String last,
+            Pageable pageable);
 
     List<Patient> findTop5ByOrderByCreatedAtDesc();
 
