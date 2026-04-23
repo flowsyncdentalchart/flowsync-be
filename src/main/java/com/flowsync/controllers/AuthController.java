@@ -83,13 +83,8 @@ public class AuthController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = authService.findByUsername(userDetails.getUsername());
 
-        return ResponseEntity.ok(new UserResponse(
-                user.getId(),
-                user.getUsername(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getTitle()
-        ));
+        return ResponseEntity.ok(new UserResponse(user.getId(), user.getUsername(), user.getFirstName(),
+                user.getLastName(), user.getTitle()));
     }
 
     @PostMapping("/logout")

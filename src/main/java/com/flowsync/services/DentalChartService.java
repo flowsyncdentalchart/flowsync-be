@@ -12,6 +12,9 @@ import com.flowsync.services.mappers.DentalChartMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class DentalChartService {
 
@@ -52,6 +55,21 @@ public class DentalChartService {
                 dentalChart.getUser().getId(), dentalChart.getUser().getFirstName(),
                 dentalChart.getUser().getLastName(), dentalChart.getCreatedAt(), dentalChart.getUpdatedAt());
 
+    }
+
+    public List<DentalChartResponse> getDentalChartsByPatientId(Long patientId) {
+        userRepository.findById(patientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Patient with id " + patientId + " not found"));
+
+        List<DentalChart> dentalCharts = dentalChartRepository.findAllByPatientId(patientId);
+        List<DentalChartResponse> dentalChartResponses = new ArrayList<>();
+        for (DentalChart dentalChart : dentalCharts) {
+            dentalChartResponses.add(new DentalChartResponse(dentalChart.getId(), dentalChart.getPatient().getId(),
+                    dentalChart.getPatient().getFirstName(), dentalChart.getPatient().getLastName(),
+                    dentalChart.getUser().getId(), dentalChart.getUser().getFirstName(),
+                    dentalChart.getUser().getLastName(), dentalChart.getCreatedAt(), dentalChart.getUpdatedAt()));
+        }
+        return dentalChartResponses;
     }
 
     public DentalChartResponse updateDentalChart(Long id, DentalChartRequest dentalChartRequest) {

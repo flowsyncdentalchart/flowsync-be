@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/dentalChart")
 public class DentalChartController {
@@ -52,6 +54,11 @@ public class DentalChartController {
 
         return dentalChartService.getDentalChartById(id);
 
+    }
+
+    @GetMapping("/patient/{id}")
+    public List<DentalChartResponse> getDentalChartsByPatientId(@PathVariable Long id) {
+        return dentalChartService.getDentalChartsByPatientId(id);
     }
 
     @PutMapping("/{id}")

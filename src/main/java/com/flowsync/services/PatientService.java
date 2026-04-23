@@ -50,14 +50,13 @@ public class PatientService {
         if (search == null || search.isBlank()) {
             result = patientRepository.findAll(pageable);
         } else {
-            result = patientRepository
-                    .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(
-                            search, search, pageable
-                    );
+            result = patientRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(search, search,
+                    pageable);
         }
 
         return result.map(patientMapper::createPatientResponseDTOFromPatient);
     }
+
     public PatientResponse updatePatient(Long id, PatientRequest patientRequest) {
 
         Patient updatedPatient = patientRepository.findPatientById(id);
@@ -95,9 +94,7 @@ public class PatientService {
     }
 
     public List<PatientResponse> getRecentPatients() {
-        return patientRepository.findTop5ByOrderByCreatedAtDesc()
-                .stream()
-                .map(patientMapper::createPatientResponseDTOFromPatient)
-                .toList();
+        return patientRepository.findTop5ByOrderByCreatedAtDesc().stream()
+                .map(patientMapper::createPatientResponseDTOFromPatient).toList();
     }
 }
