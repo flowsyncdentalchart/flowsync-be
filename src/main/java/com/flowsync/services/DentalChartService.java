@@ -7,6 +7,7 @@ import com.flowsync.models.DentalChart;
 import com.flowsync.repositories.DentalChartRepository;
 import com.flowsync.repositories.PatientRepository;
 import com.flowsync.repositories.UserRepository;
+import com.flowsync.services.factories.DentalChartFactory;
 import com.flowsync.services.mappers.DentalChartMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,20 +19,28 @@ public class DentalChartService {
     private final DentalChartMapper dentalChartMapper;
     private final PatientRepository patientRepository;
     private final UserRepository userRepository;
+    private final DentalChartFactory dentalChartFactory;
 
     public DentalChartService(DentalChartRepository dentalChartRepository, DentalChartMapper dentalChartMapper,
-            PatientRepository patientRepository, UserRepository userRepository) {
+                              PatientRepository patientRepository, UserRepository userRepository, DentalChartFactory dentalChartFactory) {
         this.dentalChartRepository = dentalChartRepository;
         this.dentalChartMapper = dentalChartMapper;
         this.patientRepository = patientRepository;
         this.userRepository = userRepository;
+        this.dentalChartFactory = dentalChartFactory;
     }
 
-    public ResponseEntity createDentalChart(DentalChartRequest dentalChartRequest) {
+    public DentalChartResponse createDentalChart(DentalChartRequest dentalChartRequest) {
 
         DentalChart dentalChart = dentalChartRepository
                 .save(dentalChartMapper.createDentalChartFromDTO(dentalChartRequest));
-        return ResponseEntity.ok("Dental Chart created with id " + dentalChart.getId());
+
+        dentalChartFactory.createTeethForDentalChart(dentalChart);
+
+        return new DentalChartResponse(dentalChart.getId(), dentalChart.getPatient().getId(),
+                dentalChart.getPatient().getFirstName(), dentalChart.getPatient().getLastName(),
+                dentalChart.getUser().getId(), dentalChart.getUser().getFirstName(),
+                dentalChart.getUser().getLastName(), dentalChart.getCreatedAt(), dentalChart.getUpdatedAt());
     }
 
     public DentalChartResponse getDentalChartById(Long id) {
