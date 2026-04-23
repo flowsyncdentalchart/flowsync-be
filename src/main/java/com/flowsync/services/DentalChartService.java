@@ -22,7 +22,7 @@ public class DentalChartService {
     private final DentalChartFactory dentalChartFactory;
 
     public DentalChartService(DentalChartRepository dentalChartRepository, DentalChartMapper dentalChartMapper,
-                              PatientRepository patientRepository, UserRepository userRepository, DentalChartFactory dentalChartFactory) {
+            PatientRepository patientRepository, UserRepository userRepository, DentalChartFactory dentalChartFactory) {
         this.dentalChartRepository = dentalChartRepository;
         this.dentalChartMapper = dentalChartMapper;
         this.patientRepository = patientRepository;

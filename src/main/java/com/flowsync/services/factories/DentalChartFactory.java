@@ -15,11 +15,11 @@ public class DentalChartFactory {
         this.toothService = toothService;
     }
 
-    public void createTeethForDentalChart(Long id){
+    public void createTeethForDentalChart(Long id) {
         ToothName[] teethName = ToothName.values();
         ToothState toothState = ToothState.PRESENT;
 
-        for (ToothName name : teethName){
+        for (ToothName name : teethName) {
             ToothRequest toothRequest = new ToothRequest(name, toothState, id);
             toothService.createTooth(toothRequest);
         }
