@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/patient")
 public class PatientController {
@@ -63,6 +65,11 @@ public class PatientController {
     @DeleteMapping("/{id}")
     public ResponseEntity deletePatient(@PathVariable Long id) {
         return patientService.deletePatient(id);
+    }
+
+    @GetMapping("/recent")
+    public List<PatientResponse> getRecentPatients() {
+        return patientService.getRecentPatients();
     }
 
 }

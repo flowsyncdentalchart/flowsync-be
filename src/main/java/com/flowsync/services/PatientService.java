@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PatientService {
 
@@ -92,4 +94,10 @@ public class PatientService {
         return ResponseEntity.ok("Deleted successfully");
     }
 
+    public List<PatientResponse> getRecentPatients() {
+        return patientRepository.findTop5ByOrderByCreatedAtDesc()
+                .stream()
+                .map(patientMapper::createPatientResponseDTOFromPatient)
+                .toList();
+    }
 }
