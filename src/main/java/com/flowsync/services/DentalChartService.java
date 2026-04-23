@@ -35,7 +35,7 @@ public class DentalChartService {
         DentalChart dentalChart = dentalChartRepository
                 .save(dentalChartMapper.createDentalChartFromDTO(dentalChartRequest));
 
-        dentalChartFactory.createTeethForDentalChart(dentalChart);
+        dentalChartFactory.createTeethForDentalChart(dentalChart.getId());
 
         return new DentalChartResponse(dentalChart.getId(), dentalChart.getPatient().getId(),
                 dentalChart.getPatient().getFirstName(), dentalChart.getPatient().getLastName(),
