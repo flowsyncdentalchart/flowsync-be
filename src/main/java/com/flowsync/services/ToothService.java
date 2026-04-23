@@ -92,13 +92,11 @@ public class ToothService {
         // no need to call save() — @Transactional handles dirty checking
     }
 
-
     @Transactional(readOnly = true)
     public List<DiagnosisResponse> getDiagnosesByToothId(Long toothId) {
         Tooth tooth = toothRepository.findById(toothId)
                 .orElseThrow(() -> new ResourceNotFoundException("Tooth not found"));
-        return tooth.getDiagnoses().stream()
-                .map(d -> new DiagnosisResponse(d.getId(), d.getName()))
+        return tooth.getDiagnoses().stream().map(d -> new DiagnosisResponse(d.getId(), d.getName()))
                 .collect(Collectors.toList());
     }
 
